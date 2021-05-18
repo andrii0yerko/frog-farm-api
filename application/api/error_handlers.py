@@ -1,6 +1,7 @@
 from flask import jsonify
 from werkzeug.http import HTTP_STATUS_CODES
 from werkzeug.exceptions import HTTPException
+from sqlalchemy.exc import IntegrityError
 
 from core import db
 from . import bp, auth
@@ -28,6 +29,12 @@ def handle_exception(e):
 def internal_error(error):
     db.session.rollback()
     return error_response(500)
+
+
+@bp.app_errorhandler(IntegrityError)
+def integrity_error(e):
+    db.session.rollback()
+    return error_response(400, 'Integrity error, some DB constraints violated')
 
 
 @auth.error_handler

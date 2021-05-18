@@ -17,9 +17,11 @@ class UserFrogsResource(Resource):
         return jsonify(frogs)
     
     @auth.login_required
-    @marshal_with(frog_fields)
     def post(self, id):
         user = User.query.get_or_404(id)
         if auth.current_user().id != user.id:
             return error_response(403, 'Not your account!')
-        return buy_a_frog(user)
+        frog = buy_a_frog(user)
+        if not frog:
+            return error_response(400, 'Not enough money')
+        return marshal(frog, frog_fields), 201

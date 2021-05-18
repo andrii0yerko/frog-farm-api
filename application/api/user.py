@@ -22,6 +22,7 @@ class UserResource(Resource):
     
 class UsersResource(Resource):
 
+    @marshal_with(user_fields)
     def post(self):
         parser = reqparse.RequestParser()
         parser.add_argument('username', required=True, trim=True, nullable=False)
@@ -36,4 +37,4 @@ class UsersResource(Resource):
         db.session.add(user)
         db.session.commit()
         buy_a_frog(user, free=True)
-        return marshal(user.__dict__, user_fields)
+        return user, 201

@@ -18,7 +18,7 @@ frog_fields = {
 user_fields = {
     'id': fields.Integer,
     'username': fields.String,
-    'frogs': fields.String(attribute=lambda x: url_for('api.userfrogsresource', id=x['id']) ),
+    'frogs': fields.String(attribute=lambda x: url_for('api.userfrogsresource', id=x.id if hasattr(x, 'id') else x['id']) ),
 }
 
 signed_user_fields = dict(**user_fields, money=fields.Integer)

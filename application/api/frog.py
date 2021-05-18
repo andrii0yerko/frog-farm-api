@@ -1,6 +1,8 @@
 from flask import jsonify, request, Response
 from flask_restful import Resource, marshal_with, reqparse, marshal
 
+import random
+
 from core import db
 from models.frog import Frog
 from . import auth
@@ -37,4 +39,5 @@ class FrogResource(Resource):
         return marshal(frog, frog_fields)
 
     def delete(self, id):
-        return error_response(405, 'Нельзя просто так избавится от жабы!')
+        msg = random.choice(['Нельзя просто так избавится от жабы!', 'Жабья кара настигнет тебя.', 'Болото проклянет тебя!', 'Даже не вздумай', 'Лягушачий нейрокороль уже уведомлен о твоих действиях.'])
+        return error_response(405, msg)
