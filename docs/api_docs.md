@@ -220,9 +220,9 @@ Or if signed in as the same user
 **Body**:
 ```json
 {
-    "username": "New User",  # must be unique
-    "email": "lol@lol.lol",  # must be unique and in a correct email format
-    "password": "qwerty123"  # at least 8 characters, 1 number and 1 letter
+    "username": "New User",  // must be unique
+    "email": "lol@lol.lol",  // must be unique and in a correct email format
+    "password": "qwerty123"  // at least 8 characters, 1 number and 1 letter
 }
 ```
 
@@ -260,7 +260,7 @@ OR
 {
     "message": {
         "email": "Enter a correct email",
-        # OR
+        // OR
         "password": "Your password must include minimum eight characters, at least one letter and one number"
     }
 }
