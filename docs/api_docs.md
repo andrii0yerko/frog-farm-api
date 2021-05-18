@@ -5,26 +5,26 @@
 ## Get image
 Get specific image from the server
 
-**URL**: `/api/v1/images/<int:id>`
+- **URL**: `/api/v1/images/<int:id>`
 
-**Method**: `GET`
+- **Method**: `GET`
 
-**Auth required**: No
+- **Auth required**: No
 
 ### Success Response
-**Condition**: Image with requested id exists on the server
+- **Condition**: Image with requested id exists on the server
 
-**Code**: `200 OK`
+- **Code**: `200 OK`
 
-**Content**: file attached as `image/*`
+- **Content**: file attached as `image/*`
 
 ### Error Response
-**Condition**: Image with requested id does not exist on the server
+- **Condition**: Image with requested id does not exist on the server
 
-**Code**: `404 NOT FOUND`
+- **Code**: `404 NOT FOUND`
 
-**Content**: 
-```json
+- **Content**: 
+```js
 {
     "message": "The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again."
 }
@@ -33,35 +33,35 @@ Get specific image from the server
 ## Generate random image
 Returns random output of the generative model
 
-**URL**: `/api/v1/random_image`
+- **URL**: `/api/v1/random_image`
 
-**Method**: `GET`
+- **Method**: `GET`
 
-**Auth required**: No
+- **Auth required**: No
 
 ### Success Response
 
-**Code**: `200 OK`
+- **Code**: `200 OK`
 
-**Content**: file attached as `image/*`
+- **Content**: file attached as `image/*`
 
 # Frogs
 ## Get frog
 Get specific frog info from the server
 
-**URL**: `/api/v1/frogs/<int:id>`
+- **URL**: `/api/v1/frogs/<int:id>`
 
-**Method**: `GET`
+- **Method**: `GET`
 
-**Auth required**: No
+- **Auth required**: No
 
 ### Success Response
-**Condition**: Frog with requested id exists on the server
+- **Condition**: Frog with requested id exists on the server
 
-**Code**: `200 OK`
+- **Code**: `200 OK`
 
-**Content example**:
-```json
+- **Content example**:
+```js
 {
     "id": 2,
     "url": "/api/v1/frogs/2",
@@ -74,12 +74,12 @@ Get specific frog info from the server
 ```
 
 ### Error Response
-**Condition**: Frog with requested id does not exist on the server
+- **Condition**: Frog with requested id does not exist on the server
 
-**Code**: `404 NOT FOUND`
+- **Code**: `404 NOT FOUND`
 
-**Content**: 
-```json
+- **Content**: 
+```js
 {
     "message": "The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again."
 }
@@ -88,40 +88,40 @@ Get specific frog info from the server
 ## Wash/Feed/Collect income
 Get specific frog info from the server
 
-**URL**: `/api/v1/frogs/<int:id>`
+- **URL**: `/api/v1/frogs/<int:id>`
 
-**Method**: `PUT`
+- **Method**: `PUT`
 
-**Auth required**: Yes
+- **Auth required**: Yes
 
-**Permissions required**: User is owner of the frog
+- **Permissions required**: User is owner of the frog
 
-**Body**:
-```json
+- **Body**:
+```js
 {
     "action": "feed"
 }
 ```
 OR
-```json
+```js
 {
     "action": "wash"
 }
 ```
 OR
-```json
+```js
 {
     "action": "collect"
 }
 ```
 
 ### Success Response
-**Condition**: Frog with requested id exists on the server and the user is its owner.
+- **Condition**: Frog with requested id exists on the server and the user is its owner.
 
-**Code**: `200 OK`
+- **Code**: `200 OK`
 
-**Content example**:
-```json
+- **Content example**:
+```js
 {
     "id": 2,
     "url": "/api/v1/frogs/2",
@@ -134,24 +134,24 @@ OR
 ```
 
 ### Error Response
-**Condition**: Frog with requested id does not exist on the server
+- **Condition**: Frog with requested id does not exist on the server
 
-**Code**: `404 NOT FOUND`
+- **Code**: `404 NOT FOUND`
 
-**Content**: 
-```json
+- **Content**: 
+```js
 {
     "message": "The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again."
 }
 ```
 OR
 
-**Condition**: User does not own this frog
+- **Condition**: User does not own this frog
 
-**Code**: `403 FORBIDDEN`
+- **Code**: `403 FORBIDDEN`
 
-**Content**: 
-```json
+- **Content**: 
+```js
 {
     "error": "Forbidden",
     "message": "Not your frog!"
@@ -161,27 +161,27 @@ OR
 ## Delete the frog
 Never try to do this
 
-**URL**: `/api/v1/frogs/<int:id>`
+- **URL**: `/api/v1/frogs/<int:id>`
 
-**Method**: `DELETE`
+- **Method**: `DELETE`
 
 # Users
 ## Get user
 Get specific user info from the server
 
-**URL**: `/api/v1/users/<int:id>`
+- **URL**: `/api/v1/users/<int:id>`
 
-**Method**: `GET`
+- **Method**: `GET`
 
-**Auth required**: optional
+- **Auth required**: optional
 
 ### Success Response
-**Condition**: User with requested id exists on the server
+- **Condition**: User with requested id exists on the server
 
-**Code**: `200 OK`
+- **Code**: `200 OK`
 
-**Content example**:
-```json
+- **Content example**:
+```js
 {
     "id": 1,
     "username": "Admin",
@@ -189,7 +189,7 @@ Get specific user info from the server
 }
 ```
 Or if signed in as the same user
-```json
+```js
 {
     "id": 1,
     "username": "Admin",
@@ -199,26 +199,26 @@ Or if signed in as the same user
 ```
 
 ### Error Response
-**Condition**: User with requested id does not exist on the server
+- **Condition**: User with requested id does not exist on the server
 
-**Code**: `404 NOT FOUND`
+- **Code**: `404 NOT FOUND`
 
-**Content**: 
-```json
+- **Content**: 
+```js
 {
     "message": "The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again."
 }
 ```
 
 ## Create a new user
-**URL**: `/api/v1/users`
+- **URL**: `/api/v1/users`
 
-**Method**: `Post`
+- **Method**: `Post`
 
-**Auth required**: No
+- **Auth required**: No
 
-**Body**:
-```json
+- **Body**:
+```js
 {
     "username": "New User",  // must be unique
     "email": "lol@lol.lol",  // must be unique and in a correct email format
@@ -227,10 +227,10 @@ Or if signed in as the same user
 ```
 
 ### Success Response
-**Code**: `201 CREATED`
+- **Code**: `201 CREATED`
 
-**Content example**:
-```json
+- **Content example**:
+```js
 {
     "id": 2,
     "username": "New User",
@@ -239,24 +239,24 @@ Or if signed in as the same user
 ```
 
 ### Error response
-**Condition**: User with this username or email already exists.
+- **Condition**: User with this username or email already exists.
 
-**Code**: `400 BAD REQUEST`
+- **Code**: `400 BAD REQUEST`
 
-**Content**: 
-```json
+- **Content**: 
+```js
 {
     "error": "Bad Request",
     "message": "Integrity error, some DB constraints violated"
 }
 ```
 OR
-**Condition**: Email or password fails format check.
+- **Condition**: Email or password fails format check.
 
-**Code**: `400 BAD REQUEST`
+- **Code**: `400 BAD REQUEST`
 
-**Content**: 
-```json
+- **Content**: 
+```js
 {
     "message": {
         "email": "Enter a correct email",
@@ -269,17 +269,17 @@ OR
 ## List of user frogs
 Get list of all user frogs from the server
 
-**URL**: `/api/v1/users/<int:id>/frogs`
+- **URL**: `/api/v1/users/<int:id>/frogs`
 
-**Method**: `GET`
+- **Method**: `GET`
 
 ### Success Response
-**Condition**: User with requested id exists on the server
+- **Condition**: User with requested id exists on the server
 
-**Code**: `200 OK`
+- **Code**: `200 OK`
 
-**Content example**:
-```json
+- **Content example**:
+```js
 [
     {
         "cleanliness": 93,
@@ -303,12 +303,12 @@ Get list of all user frogs from the server
 ```
 
 ### Error Response
-**Condition**: User with requested id does not exist on the server
+- **Condition**: User with requested id does not exist on the server
 
-**Code**: `404 NOT FOUND`
+- **Code**: `404 NOT FOUND`
 
-**Content**: 
-```json
+- **Content**: 
+```js
 {
     "message": "The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again."
 }
@@ -316,21 +316,21 @@ Get list of all user frogs from the server
 
 ## Buy a frog
 
-**URL**: `/api/v1/users/<int:id>/frogs`
+- **URL**: `/api/v1/users/<int:id>/frogs`
 
-**Method**: `POST`
+- **Method**: `POST`
 
-**Auth required**: Yes
+- **Auth required**: Yes
 
-**Permissions required**: Signed in as the same user
+- **Permissions required**: Signed in as the same user
 
 ### Success Response
-**Condition**: User with requested id exists has enough money.
+- **Condition**: User with requested id exists has enough money.
 
-**Code**: `201 OK`
+- **Code**: `201 OK`
 
-**Content example**:
-```json
+- **Content example**:
+```js
 {
     "id": 11,
     "url": "/api/v1/frogs/11",
@@ -343,12 +343,12 @@ Get list of all user frogs from the server
 ```
 
 ### Error response
-**Condition**: User does not have enough money
+- **Condition**: User does not have enough money
 
-**Code**: `400 Bad Request`
+- **Code**: `400 Bad Request`
 
-**Content**: 
-```json
+- **Content**: 
+```js
 {
     "error": "Bad Request",
     "message": "Not enough money"
@@ -356,12 +356,12 @@ Get list of all user frogs from the server
 ```
 OR
 
-**Condition**: ID does not match the user's ID
+- **Condition**: ID does not match the user's ID
 
-**Code**: `403 Bad Request`
+- **Code**: `403 Bad Request`
 
-**Content**: 
-```json
+- **Content**: 
+```js
 {
     "error": "Forbidden",
     "message": "Not your account!"
