@@ -158,7 +158,7 @@ OR
 }
 ```
 
-### Delete the frog
+## Delete the frog
 Never try to do this
 
 **URL**: `/api/v1/frogs/<int:id>`
