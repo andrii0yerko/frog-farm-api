@@ -1,0 +1,1 @@
+web: cd WebUI && gunicorn main:app
