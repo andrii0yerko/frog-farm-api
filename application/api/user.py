@@ -9,6 +9,15 @@ from models.user import User
 from .json_fields import frog_fields, user_fields, signed_user_fields
 from controllers.buy_a_frog import buy_a_frog
 
+
+class AuthEndpoint(Resource):
+    
+    @auth.login_required
+    @marshal_with(signed_user_fields)
+    def get(self):
+        return auth.current_user()
+
+
 class UserResource(Resource):
     
     @auth.login_required(optional=True)
