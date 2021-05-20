@@ -21,12 +21,6 @@ def internal_error(error):
     return error_response(500)
 
 
-@bp.app_errorhandler(IntegrityError)
-def integrity_error(e):
-    db.session.rollback()
-    return error_response(400, 'Integrity error, some DB constraints violated')
-
-
 @auth.error_handler
 def basic_auth_error():
     return error_response(401)
