@@ -1,1 +1,1 @@
-web: cd WebUI && gunicorn main:app
+web: cd application && gunicorn main:app
