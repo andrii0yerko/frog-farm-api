@@ -1,10 +1,10 @@
 from flask import jsonify
 from werkzeug.http import HTTP_STATUS_CODES
-from werkzeug.exceptions import HTTPException
 from sqlalchemy.exc import IntegrityError
 
 from core import db
 from . import bp, auth
+
 
 def error_response(status_code, message=None):
     payload = {'error': HTTP_STATUS_CODES.get(status_code, 'Unknown error')}
@@ -13,16 +13,6 @@ def error_response(status_code, message=None):
     response = jsonify(payload)
     response.status_code = status_code
     return response
-
-
-@bp.app_errorhandler(HTTPException)
-def handle_exception(e):
-    # pass through HTTP errors
-    if isinstance(e, HTTPException):
-        return error_response(e.code, e.description)
-
-    # now you're handling non-HTTP exceptions only
-    return error_response(500)
 
 
 @bp.app_errorhandler(500)
