@@ -38,7 +38,7 @@ class UsersResource(Resource):
         parser.add_argument('email', type=inputs.regex(r'^[^\s@]+@[^\s@]+\.[^\s@]+$'),
                             help='Enter a correct email',
                             trim=True, required=True, nullable=False)
-        parser.add_argument('password', type=inputs.regex(r"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"),
+        parser.add_argument('password', type=inputs.regex(r"^(?=.*[A-Za-z])(?=.*\d).{8,}$"),
                             help='Your password must include minimum eight characters, at least one letter and one number',
                             required=True, nullable=False)
         args = parser.parse_args()
