@@ -1,9 +1,12 @@
 from flask import Blueprint
 from flask_restful import Api
 
+from flask_cors import CORS
+
 from .auth import auth
 
 bp = Blueprint('api', __name__)
+cors = CORS(bp, supports_credentials=True)
 api = Api(bp)
 
 # from server.api import endpoints, errors, auth
