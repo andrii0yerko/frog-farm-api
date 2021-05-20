@@ -1,10 +1,41 @@
 # Authentication
 [Basic authentication](https://en.wikipedia.org/wiki/Basic_access_authentication) is used, so auth-required requests should include header `Authorization: Basic {{credentials}}`, where `{{credentials}}` is Base64 encoded string `<email:password>` or `<username:password>`.
 
+## Check credentials
+- **URL**: `/api/v1/auth`
+
+- **Method**: `GET`
+
+- **Auth required**: Yes - request should include `Authorization` header
+
+### Success Response
+- **Condition**: Signed in succefully - username(email) exists and password is correct
+
+- **Code**: `200 OK`
+
+- **Content**:
+```js
+{
+    "id": 1,
+    "username": "Admin",
+    "frogs": "/api/v1/users/1/frogs",
+    "money": 900
+}
+```
+### Error Response
+Otherwise. All the auth-required requests return the same response if auth was failed.
+- **Code**: `401 UNAUTHORIZED`
+
+- **Content**: 
+```js
+{
+    "error": "Unauthorized"
+}
+```
+
 # Images
 ## Get image
 Get specific image from the server
-
 - **URL**: `/api/v1/images/<int:id>`
 
 - **Method**: `GET`
@@ -247,7 +278,9 @@ Or if signed in as the same user
 ```js
 {
     "error": "Bad Request",
-    "message": "Integrity error, some DB constraints violated"
+    "message": "User with the same username already exists"
+    // OR
+    "message": "User with the same email already exists"
 }
 ```
 OR
