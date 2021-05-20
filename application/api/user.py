@@ -1,12 +1,11 @@
-from flask_restful import Resource, fields, marshal_with, marshal, inputs, reqparse
+from flask_restful import Resource, marshal_with, marshal, inputs, reqparse
 from sqlalchemy import func
 
-from core import db
-from . import auth
+from .auth import auth
 from models.user import User
 from .json_fields import user_fields, signed_user_fields
-from .error_handlers import error_response
-from controllers.buy_a_frog import buy_a_frog
+from .error import error_response
+from controllers.create_user import create_user
 
 
 class AuthEndpoint(Resource):
@@ -22,10 +21,9 @@ class UserResource(Resource):
     @auth.login_required(optional=True)
     def get(self, id):
         user = User.query.get_or_404(id)
-        data = user.__dict__.copy()
         if auth.current_user() and auth.current_user().id == user.id:
-            return marshal(data, signed_user_fields)
-        return marshal(data, user_fields)
+            return marshal(user, signed_user_fields)
+        return marshal(user, user_fields)
 
 
 class UsersResource(Resource):
@@ -44,8 +42,5 @@ class UsersResource(Resource):
             return error_response(400, "User with the same username already exists")
         if User.query.filter(func.lower(User.email) == func.lower(args["email"])).first():
             return error_response(400, "User with the same email already exists")
-        user = User(**args)
-        db.session.add(user)
-        db.session.commit()
-        buy_a_frog(user, free=True)
+        user = create_user(**args)
         return marshal(user, user_fields), 201

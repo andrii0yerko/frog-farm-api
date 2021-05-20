@@ -1,6 +1,5 @@
 from core import db
-from models import Frog
-from constants import MAX_CLEANLINESS, MAX_FOOD, CLEANLINESS_INCREASE, FOOD_INCREASE, CLEANLINESS_DECREASE, FOOD_DECREASE
+from constants import MAX_CLEANLINESS, MAX_FOOD, CLEANLINESS_DECREASE, FOOD_DECREASE
 
 
 def wash_frog(frog):

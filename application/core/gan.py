@@ -1,8 +1,8 @@
 import torch
 from torch import nn
-from PIL import Image
-from torchvision.transforms import ToPILImage  #TODO: rewrite tensor->image transformation without torchvision
+from torchvision.transforms import ToPILImage  # TODO: rewrite tensor->image transformation without torchvision
 import io
+
 
 class Generator(nn.Module):
 
@@ -10,7 +10,7 @@ class Generator(nn.Module):
         super(Generator, self).__init__()
         self.z_dim = z_dim
         self.gen = nn.Sequential(
-            nn.ConvTranspose2d( z_dim, hidden_dim * 8, kernel_size=4,
+            nn.ConvTranspose2d(z_dim, hidden_dim * 8, kernel_size=4,
                                stride=1, padding=0, bias=False),
             nn.BatchNorm2d(hidden_dim * 8),
             nn.ReLU(True),
@@ -43,7 +43,7 @@ class GANGenerator():
     PATH = './frog-gan-v1.pt'
     z_dim = 100
     hidden_dim = 64
-    
+
     def __init__(self):
         self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
         self.model = Generator(z_dim=self.z_dim, hidden_dim=self.hidden_dim).to(self.device)
@@ -60,6 +60,6 @@ class GANGenerator():
             image.save(f, format='JPEG')
             img_byte_arr = f.getvalue()
         return img_byte_arr
-    
+
     def get_noise(self, n_samples=1):
         return torch.randn(n_samples, self.z_dim, device=self.device)

@@ -8,12 +8,13 @@ from .gan import GANGenerator
 db = SQLAlchemy()
 model = GANGenerator()
 
+
 def create_app():
     """Construct the core application."""
     app = Flask(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DB_URL']
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    
+
     db.init_app(app)
 
     with app.app_context():
@@ -23,5 +24,5 @@ def create_app():
 
         from api import bp as api_bp
         app.register_blueprint(api_bp, url_prefix='/api/v1')
-        
+
         return app
