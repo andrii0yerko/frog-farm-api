@@ -1,12 +1,18 @@
 # Authentication
-[Basic authentication](https://en.wikipedia.org/wiki/Basic_access_authentication) is used, so auth-required requests should include header `Authorization: Basic {{credentials}}`, where `{{credentials}}` is Base64 encoded string `<email:password>` or `<username:password>`.
+[JWT authentication](https://en.wikipedia.org/wiki/JSON_Web_Token) is used, so auth-required requests should include header `Authorization: Bearer {{token}}`.
 
-## Check credentials
+## Get token
 - **URL**: `/api/v1/auth`
 
-- **Method**: `GET`
+- **Method**: `POST`
 
-- **Auth required**: Yes - request should include `Authorization` header
+- **Body**:
+```
+{
+    "username": "username or password",
+    "password": "password"
+}
+```
 
 ### Success Response
 - **Condition**: Signed in succefully - username(email) exists and password is correct
@@ -16,20 +22,54 @@
 - **Content**:
 ```js
 {
-    "id": 1,
-    "username": "Admin",
-    "frogs": "/api/v1/users/1/frogs",
-    "money": 900
+    "access_token": "token..."
 }
 ```
 ### Error Response
-Otherwise. All the auth-required requests return the same response if auth was failed.
+Otherwise
 - **Code**: `401 UNAUTHORIZED`
 
 - **Content**: 
 ```js
 {
-    "error": "Unauthorized"
+    "error": "Unauthorized",
+    "message": "Wrong username or email"
+    // OR
+    "message": "Wrong password"
+}
+```
+
+## Get current user
+- **URL**: `/api/v1/auth`
+
+- **Method**: `GET`
+
+- **Auth required**: Yes
+
+### Success Response
+- **Condition**: Auth token is valid
+
+- **Code**: `200 OK`
+
+- **Content**:
+```js
+{
+    "id": 1,
+    "username": "Admin",
+    "frogs": "/api/v1/users/1/frogs",
+    "money": 6302
+}
+```
+### Error response
+Otherwise. All the auth-required requests return the same response if auth was failed.
+
+- **Code**: `401 UNAUTHORIZED`
+
+- **Content**:
+```js
+{
+    "error": "Unauthorized",
+    "message": "reason why authentication was failed"
 }
 ```
 

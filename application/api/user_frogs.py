@@ -1,9 +1,9 @@
 from flask import jsonify
 from flask_restful import Resource, marshal
+from flask_jwt_extended import jwt_required, current_user
 
 from models.user import User
 from controllers.buy_a_frog import buy_a_frog
-from .auth import auth
 from .json_fields import frog_fields
 from .error import error_response
 
@@ -15,10 +15,10 @@ class UserFrogsResource(Resource):
         frogs = [marshal(frog, frog_fields) for frog in user.frogs]
         return jsonify(frogs)
 
-    @auth.login_required
+    @jwt_required()
     def post(self, id):
         user = User.query.get_or_404(id)
-        if auth.current_user().id != user.id:
+        if current_user.id != user.id:
             return error_response(403, 'Not your account!')
         frog = buy_a_frog(user)
         if not frog:

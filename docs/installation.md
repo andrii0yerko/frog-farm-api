@@ -26,13 +26,16 @@ Dependencies include PyTorch. For portability reasons, requirements.txt includes
 ```bash
 # on Unix-based OS
 export DATABASE_URL="dbms://username:password@host:port/database_name"
+# used by flask-jwt-extended to create tokens
+export JWT_SECRET_KEY="secret!"
 # if you want to use flask shell
 # or run the application with the flask command 
-export FLASK_APP="main.py"  
+export FLASK_APP="main.py"
 ```
 ```bash
 # on Windows
 set DATABASE_URL="dbms://username:password@host:port/database_name"
+set JWT_SECRET_KEY="secret!"
 set FLASK_APP="main.py"
 ```
 
