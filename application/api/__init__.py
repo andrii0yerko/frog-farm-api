@@ -2,6 +2,7 @@ from flask import Blueprint
 from flask_restful import Api
 from flask_cors import CORS
 
+from .jwt import *
 from .image import ImageResource, RandomImageResource
 from .frog import FrogResource
 from .user import UserResource, UsersResource

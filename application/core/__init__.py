@@ -26,7 +26,6 @@ def create_app():
         from controllers.event import on_frog_load
         db.create_all()
 
-        import api.jwt
         from api import bp as api_bp
         app.register_blueprint(api_bp, url_prefix='/api/v1')
 

@@ -13,7 +13,7 @@ class UserResource(Resource):
     @jwt_required(optional=True)
     def get(self, id):
         user = User.query.get_or_404(id)
-        if current_user and auth.current_user.id == user.id:
+        if current_user and current_user.id == user.id:
             return marshal(user, signed_user_fields)
         return marshal(user, user_fields)
 
