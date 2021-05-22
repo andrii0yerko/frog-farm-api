@@ -1,10 +1,10 @@
 from flask_restful import Resource, marshal_with, reqparse, marshal
+from flask_jwt_extended import jwt_required, current_user
 
 import random
 
 from models.frog import Frog
 from controllers.frog_actions import wash_frog, feed_frog, collect_money
-from .auth import auth
 from .json_fields import frog_fields
 from .error import error_response
 
@@ -16,11 +16,11 @@ class FrogResource(Resource):
         frog = Frog.query.get_or_404(id)
         return frog
 
-    @auth.login_required
+    @jwt_required()
     def put(self, id):
         frog = Frog.query.get_or_404(id)
 
-        if auth.current_user().id != frog.owner_id:
+        if current_user.id != frog.owner_id:
             return error_response(403, 'Not your frog!')
 
         parser = reqparse.RequestParser()

@@ -1,27 +1,19 @@
 from flask_restful import Resource, marshal_with, marshal, inputs, reqparse
+from flask_jwt_extended import jwt_required, current_user
 from sqlalchemy import func
 
-from .auth import auth
 from models.user import User
 from .json_fields import user_fields, signed_user_fields
 from .error import error_response
 from controllers.create_user import create_user
 
 
-class AuthEndpoint(Resource):
-
-    @auth.login_required
-    @marshal_with(signed_user_fields)
-    def get(self):
-        return auth.current_user()
-
-
 class UserResource(Resource):
 
-    @auth.login_required(optional=True)
+    @jwt_required(optional=True)
     def get(self, id):
         user = User.query.get_or_404(id)
-        if auth.current_user() and auth.current_user().id == user.id:
+        if current_user and auth.current_user.id == user.id:
             return marshal(user, signed_user_fields)
         return marshal(user, user_fields)
 

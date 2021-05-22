@@ -4,7 +4,8 @@ from flask_cors import CORS
 
 from .image import ImageResource, RandomImageResource
 from .frog import FrogResource
-from .user import UserResource, UsersResource, AuthEndpoint
+from .user import UserResource, UsersResource
+from .auth import AuthEndpoint
 from .user_frogs import UserFrogsResource
 
 bp = Blueprint('api', __name__)

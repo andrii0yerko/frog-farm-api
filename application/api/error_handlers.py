@@ -1,7 +1,7 @@
-from core import db
+from core import db, jwt
 from . import bp
-from .auth import auth
 from .error import error_response
+
 
 @bp.app_errorhandler(500)
 def internal_error(error):
@@ -9,6 +9,6 @@ def internal_error(error):
     return error_response(500)
 
 
-@auth.error_handler
-def basic_auth_error():
-    return error_response(401)
+@jwt.invalid_token_loader
+def invalid_token(reason):
+    return error_response(401, reason)
