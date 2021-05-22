@@ -34,6 +34,6 @@ class AuthEndpoint(Resource):
         if not user.check_password(password):
             return error_response(401, "Wrong password")
 
-        access_token = create_access_token(identity=user.id)
+        access_token = create_access_token(identity=user)
         print(access_token)
         return jsonify(access_token=access_token)
