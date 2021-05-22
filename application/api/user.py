@@ -1,11 +1,11 @@
-from flask_restful import Resource, marshal_with, marshal, inputs, reqparse
+from flask_restful import Resource, marshal, inputs, reqparse
 from flask_jwt_extended import jwt_required, current_user
 from sqlalchemy import func
 
 from models.user import User
 from .json_fields import user_fields, signed_user_fields
 from .error import error_response
-from controllers.create_user import create_user
+from controllers.user_actions import create_user
 
 
 class UserResource(Resource):

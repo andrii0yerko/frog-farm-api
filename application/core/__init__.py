@@ -30,4 +30,7 @@ def create_app():
         from api import bp as api_bp
         app.register_blueprint(api_bp, url_prefix='/api/v1')
 
+        from .shell import make_shell_context
+        app.shell_context_processor(make_shell_context)
+
         return app
