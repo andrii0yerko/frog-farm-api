@@ -1,6 +1,7 @@
 import torch
 from torch import nn
 from torchvision.transforms import ToPILImage  # TODO: rewrite tensor->image transformation without torchvision
+from PIL import Image
 import io
 
 
@@ -56,6 +57,15 @@ class GANGenerator():
         image_tensor = (image_tensor.cpu() + 1) / 2
         image = ToPILImage()(image_tensor[0])
         image = image.resize((128, 128), resample=0)
+
+        width, height = image.size
+        padding = 16
+        new_width = width + 2*padding
+        new_height = height + 2*padding
+        result = Image.new(image.mode, (new_width, new_height), (255, 255, 255))
+        result.paste(image, (padding, padding))
+        image = result
+
         with io.BytesIO() as f:
             image.save(f, format='JPEG')
             img_byte_arr = f.getvalue()
