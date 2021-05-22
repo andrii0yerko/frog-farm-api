@@ -24,7 +24,6 @@ class AuthEndpoint(Resource):
         args = parser.parse_args()
         username = args['username']
         password = args['password']
-
         if '@' in username:
             user = User.query.filter_by(email=username).first()
         else:
@@ -35,5 +34,6 @@ class AuthEndpoint(Resource):
         if not user.check_password(password):
             return error_response(401, "Wrong password")
 
-        access_token = create_access_token(identity=user)
+        access_token = create_access_token(identity=user.id)
+        print(access_token)
         return jsonify(access_token=access_token)
