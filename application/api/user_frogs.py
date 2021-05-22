@@ -13,6 +13,7 @@ class UserFrogsResource(Resource):
     def get(self, id):
         user = User.query.get_or_404(id)
         frogs = [marshal(frog, frog_fields) for frog in user.frogs]
+        frogs.sort(key=lambda frog: frog['id'])
         return jsonify(frogs)
 
     @jwt_required()
