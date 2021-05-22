@@ -20,7 +20,7 @@ def create_app():
 
     db.init_app(app)
     jwt.init_app(app)
-
+    
     with app.app_context():
         from models import Image, User, Frog
         from controllers.event import on_frog_load

@@ -1,12 +1,10 @@
-from core import db, jwt
-from . import bp
+from core import jwt
 from .error import error_response
 
-
-@bp.app_errorhandler(500)
-def internal_error(error):
-    db.session.rollback()
-    return error_response(500)
+errors = {
+    "ExpiredSignatureError": error_response(401, "[]Token has expired"),
+    "InvalidTokenError": error_response(401, "[]Invalid token")
+}
 
 
 @jwt.invalid_token_loader
@@ -15,5 +13,5 @@ def invalid_token(reason):
 
 
 @jwt.expired_token_loader
-def invalid_token(header, payload):
+def expired_token(header, payload):
     return error_response(401, "Token has expired")

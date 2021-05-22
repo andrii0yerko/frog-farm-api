@@ -2,18 +2,17 @@ from flask import Blueprint
 from flask_restful import Api
 from flask_cors import CORS
 
-from .jwt import *
 from .image import ImageResource, RandomImageResource
 from .frog import FrogResource
 from .user import UserResource, UsersResource
 from .auth import AuthEndpoint
 from .user_frogs import UserFrogsResource
+from .error_handlers import errors
 
 bp = Blueprint('api', __name__)
 cors = CORS(bp, supports_credentials=True)
-api = Api(bp)
+api = Api(bp, errors=errors)
 
-from .error_handlers import *
 api.add_resource(ImageResource, '/images/<int:id>')
 api.add_resource(RandomImageResource, '/random_image')
 api.add_resource(FrogResource, '/frogs/<int:id>')
