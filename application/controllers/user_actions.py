@@ -8,7 +8,7 @@ def create_user(username, email, password):
     user = User(username, email, password)
     db.session.add(user)
     db.session.commit()
-    buy_frog(user, free=True)
+    add_frog(user)
     return user
 
 
