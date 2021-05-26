@@ -57,7 +57,10 @@ Otherwise
     "id": 1,
     "username": "Admin",
     "frogs": "/api/v1/users/1/frogs",
-    "money": 6302
+    "money": 6302,
+    "total_food_spent": 63,
+    "total_water_spent": 73,
+    "total_money_collected": 130
 }
 ```
 ### Error response
@@ -278,7 +281,10 @@ Get specific user info from the server
     "id": 1,
     "username": "Admin",
     "frogs": "/api/v1/users/1/frogs",
-    "money": 900
+    "money": 900,
+    "total_food_spent": 63,
+    "total_water_spent": 73,
+    "total_money_collected": 130
 }
 ```
 
@@ -338,7 +344,11 @@ If the query was not specified, a list of all users will be returned.
 {
     "id": 2,
     "username": "New User",
-    "frogs": "/api/v1/users/2/frogs"
+    "frogs": "/api/v1/users/2/frogs",
+    "money": 100,
+    "total_food_spent": 0,
+    "total_water_spent": 0,
+    "total_money_collected": 0
 }
 ```
 

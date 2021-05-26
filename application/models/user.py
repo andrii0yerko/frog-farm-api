@@ -12,7 +12,12 @@ class User(db.Model):
     password_hash = db.Column(db.String(256), unique=False, nullable=False)
     money = db.Column(db.Integer, nullable=False, default=100)
 
+    total_food_spent = db.Column(db.BigInteger, nullable=False, default=0)
+    total_water_spent = db.Column(db.BigInteger, nullable=False, default=0)
+    total_money_collected = db.Column(db.BigInteger, nullable=False, default=0)
+
     frogs = db.relationship('Frog', backref='owner', lazy=True)
+
 
     def __init__(self, username, email, password):
         self.username = username

@@ -29,5 +29,8 @@ user_fields = {
     'frogs': fields.String(
         attribute=lambda x: url_for('api.userfrogsresource', id=x.id if hasattr(x, 'id') else x['id'])
         ),
-    'money': fields.Integer
+    'money': fields.Integer,
+    'total_food_spent': fields.Integer,
+    'total_water_spent': fields.Integer,
+    'total_money_collected': fields.Integer
 }
