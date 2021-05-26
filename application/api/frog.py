@@ -4,7 +4,7 @@ from flask_jwt_extended import jwt_required, current_user
 import random
 
 from models.frog import Frog
-from controllers.frog_actions import wash_frog, feed_frog, collect_money
+from controllers.frog_actions import wash_frog, feed_frog, collect_money, upgrade_frog
 from .json_fields import frog_fields
 from .error import error_response
 
@@ -25,17 +25,22 @@ class FrogResource(Resource):
 
         parser = reqparse.RequestParser()
         parser.add_argument(
-            'action', choices=['wash', 'feed', 'collect'],
-            help="{error_msg}. Allowed actions are 'wash', 'feed' and 'collect",
+            'action', choices=['wash', 'feed', 'collect', 'upgrade'],
+            help="{error_msg}. Allowed actions are 'wash', 'feed', 'collect' and 'upgrade'",
             required=True, trim=True, nullable=False
             )
         args = parser.parse_args()
-        if args['action'] == 'wash':
+        action = args['action']
+        if action == 'wash':
             frog = wash_frog(frog)
-        elif args['action'] == 'feed':
+        elif action == 'feed':
             frog = feed_frog(frog)
-        elif args['action'] == 'collect':
+        elif action == 'collect':
             frog = collect_money(frog)
+        elif action == 'upgrade':
+            frog = upgrade_frog(frog)
+            if not frog:
+                return error_response(400, 'Not enough money')
         return marshal(frog, frog_fields)
 
     def delete(self, id):

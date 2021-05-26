@@ -7,6 +7,7 @@ frog_fields = {
         attribute=lambda x: url_for('api.frogresource', id=x.id if hasattr(x, 'id') else x['id'])
         ),
     'name': fields.String,
+    'level': fields.Integer,
     'food': fields.Integer,
     'money': fields.Integer,
     'cleanliness': fields.Integer,

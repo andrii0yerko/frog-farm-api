@@ -4,7 +4,7 @@ from models.frog import Frog
 from datetime import datetime, timezone
 
 from core import db
-from constants import (TIME_INTERVAL, FOOD_DECREASE, CLEANLINESS_DECREASE, MAX_MONEY,
+from constants import (TIME_INTERVAL, FOOD_DECREASE, CLEANLINESS_DECREASE, MAX_MONEY, MONEY_PER_LEVEL,
                        MAX_FOOD, MAX_CLEANLINESS, PRIMARY_INCOME, SECONDARY_INCOME)
 
 
@@ -63,7 +63,8 @@ def on_frog_load(target, context):
 
     income = PRIMARY_INCOME*primary + SECONDARY_INCOME*secondary
 
-    target.money = min(MAX_MONEY, income + target.money)
+    max_value = MAX_MONEY + target.level * MONEY_PER_LEVEL
+    target.money = min(max_value, income + target.money)
     target.food -= min(target.food, periods*FOOD_DECREASE)
     target.cleanliness -= min(target.cleanliness, periods*CLEANLINESS_DECREASE)
 

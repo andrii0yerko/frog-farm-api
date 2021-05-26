@@ -137,6 +137,7 @@ Get specific frog info from the server
     "id": 2,
     "url": "/api/v1/frogs/2",
     "name": "Большой Поедатель Бутонов",
+    "level": 0,
     "food": 0,
     "money": 100,
     "cleanliness": 0,
@@ -156,7 +157,7 @@ Get specific frog info from the server
 }
 ```
 
-## Wash/Feed/Collect income
+## Wash/Feed/Collect income/Upgrade the frog
 Get specific frog info from the server
 
 - **URL**: `/api/v1/frogs/<int:id>`
@@ -185,6 +186,12 @@ OR
     "action": "collect"
 }
 ```
+OR
+```js
+{
+    "action": "upgrade"
+}
+```
 
 ### Success Response
 - **Condition**: Frog with requested id exists on the server and the user is its owner.
@@ -197,6 +204,7 @@ OR
     "id": 2,
     "url": "/api/v1/frogs/2",
     "name": "Большой Поедатель Бутонов",
+    "level": 0,
     "food": 100,
     "money": 100,
     "cleanliness": 0,
@@ -226,6 +234,19 @@ OR
 {
     "error": "Forbidden",
     "message": "Not your frog!"
+}
+```
+OR
+
+- **Condition**: The action was "upgrade" but the user does not have enough money
+
+- **Code**: `400 BAD REQUEST`
+
+- **Content**: 
+```js
+{
+    "error": "Bad Request",
+    "message": "Not enough money"
 }
 ```
 
@@ -261,8 +282,7 @@ Get specific user info from the server
 }
 ```
 
-### Search user by username
-## Get user
+## Search user by username
 Get a list of users matching a query
 
 - **URL**: `/api/v1/users?username=<string:query>`
@@ -368,22 +388,24 @@ Get list of all user frogs from the server
 ```js
 [
     {
-        "cleanliness": 93,
-        "food": 80,
-        "id": 3,
-        "image": "/api/v1/images/3",
-        "money": 50,
-        "name": "Королевский Милашка",
-        "url": "/api/v1/frogs/3"
+        "id": 1,
+        "url": "/api/v1/frogs/1",
+        "name": "Круглый Бахрома",
+        "level": 0,
+        "food": 97,
+        "money": 108,
+        "cleanliness": 87,
+        "image": "/api/v1/images/1"
     },
     {
-        "cleanliness": 60,
-        "food": 10,
-        "id": 4,
-        "image": "/api/v1/images/4",
-        "money": 50,
-        "name": "Вонючий Сфера",
-        "url": "/api/v1/frogs/4"
+        "id": 2,
+        "url": "/api/v1/frogs/2",
+        "name": "Круглый Дождевая лягушка",
+        "level": 0,
+        "food": 96,
+        "money": 100,
+        "cleanliness": 0,
+        "image": "/api/v1/images/2"
     }
 ]
 ```
@@ -421,6 +443,7 @@ Get list of all user frogs from the server
     "id": 11,
     "url": "/api/v1/frogs/11",
     "name": "Милашка Бахрома",
+    "level": 0,
     "food": 50,
     "money": 0,
     "cleanliness": 50,

@@ -1,5 +1,18 @@
 from core import db
-from constants import MAX_CLEANLINESS, MAX_FOOD, CLEANLINESS_DECREASE, FOOD_DECREASE
+from constants import MAX_CLEANLINESS, MAX_FOOD, MAX_LEVEL, CLEANLINESS_DECREASE, FOOD_DECREASE, UPGRADE_PRICE
+from .user_actions import change_money
+
+
+def upgrade_frog(frog):
+    if frog.level >= MAX_LEVEL:
+        return frog
+    if frog.owner.money < UPGRADE_PRICE:
+        return None
+    change_money(frog.owner, -UPGRADE_PRICE)
+    frog.level = frog.level + 1
+    db.session.merge(frog)
+    db.session.commit()
+    return frog
 
 
 def wash_frog(frog):
