@@ -1,24 +1,37 @@
-from flask_restful import Resource, marshal, inputs, reqparse
+from flask_restful import Resource, marshal, marshal_with, inputs, reqparse
 from flask_jwt_extended import jwt_required, current_user
 from sqlalchemy import func
 
 from models.user import User
-from .json_fields import user_fields, signed_user_fields
+from .json_fields import user_fields, user_list_fields
 from .error import error_response
 from controllers.user_actions import create_user
 
 
 class UserResource(Resource):
 
-    @jwt_required(optional=True)
+    # @jwt_required(optional=True)
+    @marshal_with(user_fields)
     def get(self, id):
         user = User.query.get_or_404(id)
-        if current_user and current_user.id == user.id:
-            return marshal(user, signed_user_fields)
-        return marshal(user, user_fields)
+        # if current_user and current_user.id == user.id:
+        #     return marshal(user, signed_user_fields)
+        return user
 
 
 class UsersResource(Resource):
+
+    @marshal_with(user_list_fields)
+    def get(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('username', location=['args'],
+                            default='', trim=True, nullable=False)
+        args = parser.parse_args()
+        search = args['username']
+        users = User.query.filter(User.username.ilike(f"{search}%")).union(
+            User.query.filter(User.username.ilike(f"%{search}%"))
+        ).all()
+        return users
 
     def post(self):
         parser = reqparse.RequestParser()

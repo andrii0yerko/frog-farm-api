@@ -2,7 +2,7 @@ from flask_restful import Resource, marshal_with, reqparse
 from flask import jsonify
 
 from models.user import User
-from .json_fields import signed_user_fields
+from .json_fields import user_fields
 from .error import error_response
 
 from flask_jwt_extended import create_access_token
@@ -13,7 +13,7 @@ from flask_jwt_extended import jwt_required
 class AuthEndpoint(Resource):
 
     @jwt_required()
-    @marshal_with(signed_user_fields)
+    @marshal_with(user_fields)
     def get(self):
         return current_user
 

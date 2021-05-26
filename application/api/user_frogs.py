@@ -1,5 +1,5 @@
 from flask import jsonify
-from flask_restful import Resource, marshal
+from flask_restful import Resource, marshal, marshal_with
 from flask_jwt_extended import jwt_required, current_user
 
 from models.user import User
@@ -10,11 +10,13 @@ from .error import error_response
 
 class UserFrogsResource(Resource):
 
+    @marshal_with(frog_fields)
     def get(self, id):
         user = User.query.get_or_404(id)
-        frogs = [marshal(frog, frog_fields) for frog in user.frogs]
-        frogs.sort(key=lambda frog: frog['id'])
-        return jsonify(frogs)
+        # frogs = [marshal(frog, frog_fields) for frog in user.frogs]
+        frogs = user.frogs
+        frogs.sort(key=lambda frog: frog.id)
+        return frogs
 
     @jwt_required()
     def post(self, id):

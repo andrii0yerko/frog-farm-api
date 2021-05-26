@@ -15,12 +15,18 @@ frog_fields = {
         ),
 }
 
+user_list_fields = {
+    'username': fields.String,
+    'url': fields.String(
+        attribute=lambda x: url_for('api.userresource', id=x.id)
+    ),
+}
+
 user_fields = {
     'id': fields.Integer,
     'username': fields.String,
     'frogs': fields.String(
         attribute=lambda x: url_for('api.userfrogsresource', id=x.id if hasattr(x, 'id') else x['id'])
         ),
+    'money': fields.Integer
 }
-
-signed_user_fields = dict(**user_fields, money=fields.Integer)

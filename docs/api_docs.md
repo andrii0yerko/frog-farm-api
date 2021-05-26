@@ -256,30 +256,43 @@ Get specific user info from the server
 {
     "id": 1,
     "username": "Admin",
-    "frogs": "/api/v1/users/1/frogs"
-}
-```
-Or if signed in as the same user
-```js
-{
-    "id": 1,
-    "username": "Admin",
     "frogs": "/api/v1/users/1/frogs",
     "money": 900
 }
 ```
 
-### Error Response
-- **Condition**: User with requested id does not exist on the server
+### Search user by username
+## Get user
+Get a list of users matching a query
 
-- **Code**: `404 NOT FOUND`
+- **URL**: `/api/v1/users?username=<string:query>`
 
-- **Content**: 
+- **Method**: `GET`
+
+- **Auth required**: No
+
+### Success Response
+
+- **Code**: `200 OK`
+
+- **Content example**:
 ```js
-{
-    "message": "The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again."
-}
+[
+    {
+        "username": "Admin",
+        "url": "/api/v1/users/1"
+    },
+    {
+        "username": "admin1",
+        "url": "/api/v1/users/10"
+    },
+    {
+        "username": "not admin",
+        "url": "/api/v1/users/26"
+    }
+]
 ```
+If the query was not specified, a list of all users will be returned.
 
 ## Create a new user
 - **URL**: `/api/v1/users`
