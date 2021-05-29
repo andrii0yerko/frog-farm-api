@@ -91,7 +91,7 @@ class Gameplay(WSEndpoint):
     def on_message(self, client, message):
         try:
             message = json.loads(message)
-        except ValueError:
+        except TypeError:
             return self.error_response(client, "Your message is not JSON-serializable")
         app.logger.debug(f"{client} send {message}")
         action = message.pop('action', None)
