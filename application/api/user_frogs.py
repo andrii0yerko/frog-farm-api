@@ -27,5 +27,4 @@ class UserFrogsResource(Resource):
         frog = buy_frog(user)
         if not frog:
             return error_response(400, 'Not enough money')
-        stock_change()
         return marshal(frog, frog_fields), 201

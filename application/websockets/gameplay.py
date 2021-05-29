@@ -3,6 +3,7 @@ from flask import current_app as app
 from models import User, Frog
 from schemas import FrogSchema, UserSchema
 from controllers.frog_actions import wash_frog, feed_frog, collect_money, upgrade_frog
+from controllers.user_actions import buy_frog
 from .ws_endpoint import WSEndpoint
 
 import json
@@ -49,7 +50,7 @@ class Client():
 
 class Gameplay(WSEndpoint):
 
-    ALLOWED_ACTIONS = ["ping", "authorization", "get", "interact"]
+    ALLOWED_ACTIONS = ["ping", "authorization", "get", "interact", "buy"]
     REQUIRED_PARAMS = {  # used for the simple args parsing now. What about migrating to Marshmallow?
         "authorization": ["username", "password"],
         "interact": ["subaction", "id"]
@@ -89,7 +90,7 @@ class Gameplay(WSEndpoint):
         self.clients.remove(client)
 
     def on_message(self, client, message):
-        if message == 'PING':
+        if message == 'PING' or message is None:
             return
         try:
             message = json.loads(message)
@@ -110,10 +111,12 @@ class Gameplay(WSEndpoint):
 
         if action == 'authorization':
             self.authorization(client, message)
-        if action == 'get':
+        elif action == 'get':
             self.get_resource(client, message)
-        if action == 'interact':
+        elif action == 'interact':
             self.interact(client, message)
+        elif action == 'buy':
+            self.purchase(client)
 
     def authorization(self, client, message):
         success, status = client.authorize(message['username'], message['password'])
@@ -165,3 +168,9 @@ class Gameplay(WSEndpoint):
                 return self.send_resource(client, "user", UserSchema().dump(client.user))
         else:
             return self.error_response(client, "Unknown resource")
+
+    def purchase(self, client, *args):
+        frog = buy_frog(client.user)
+        if not frog:
+            return self.error_response(client, 'Not enough money')
+        return self.send_resource(client, "frog", FrogSchema().dump(frog))
