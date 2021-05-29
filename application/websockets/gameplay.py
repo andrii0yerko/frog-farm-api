@@ -49,7 +49,7 @@ class Client():
 
 class Gameplay(WSEndpoint):
 
-    ALLOWED_ACTIONS = ["authorization", "get", "interact"]
+    ALLOWED_ACTIONS = ["ping", "authorization", "get", "interact"]
     REQUIRED_PARAMS = {  # used for the simple args parsing now. What about migrating to Marshmallow?
         "authorization": ["username", "password"],
         "interact": ["subaction", "id"]
@@ -89,9 +89,11 @@ class Gameplay(WSEndpoint):
         self.clients.remove(client)
 
     def on_message(self, client, message):
+        if message == 'PING':
+            return
         try:
             message = json.loads(message)
-        except TypeError:
+        except json.decoder.JSONDecodeError:
             return self.error_response(client, "Your message is not JSON-serializable")
         app.logger.debug(f"{client} send {message}")
         action = message.pop('action', None)

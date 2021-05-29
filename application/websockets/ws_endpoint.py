@@ -1,3 +1,5 @@
+from geventwebsocket.exceptions import WebSocketError
+
 
 class WSEndpoint():
 
@@ -10,7 +12,10 @@ class WSEndpoint():
             client = modclient
         while not client.closed:
             message = client.receive()
-            self.on_message(client, message)
+            try:
+                self.on_message(client, message)
+            except WebSocketError:
+                break
         self.on_disconnect(client)
 
     def on_connect(self, client):
