@@ -7,7 +7,6 @@ from controllers.user_actions import buy_frog
 from .json_fields import frog_fields
 from .error import error_response
 from controllers.stock import stock_change
-from websockets import stock_broadcast
 
 
 class UserFrogsResource(Resource):
@@ -29,5 +28,4 @@ class UserFrogsResource(Resource):
         if not frog:
             return error_response(400, 'Not enough money')
         stock_change()
-        stock_broadcast()
         return marshal(frog, frog_fields), 201
