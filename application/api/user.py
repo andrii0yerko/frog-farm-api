@@ -1,5 +1,5 @@
 from flask_restful import Resource, marshal, marshal_with, inputs, reqparse
-from flask_jwt_extended import jwt_required, current_user
+from flask import current_app as app
 from sqlalchemy import func
 
 from models.user import User
@@ -10,12 +10,9 @@ from controllers.user_actions import create_user
 
 class UserResource(Resource):
 
-    # @jwt_required(optional=True)
     @marshal_with(user_fields)
     def get(self, id):
         user = User.query.get_or_404(id)
-        # if current_user and current_user.id == user.id:
-        #     return marshal(user, signed_user_fields)
         return user
 
 
@@ -48,4 +45,5 @@ class UsersResource(Resource):
         if User.query.filter(func.lower(User.email) == func.lower(args["email"])).first():
             return error_response(400, "User with the same email already exists")
         user = create_user(**args)
+        app.logger.info(f"User created: {user}")
         return marshal(user, user_fields), 201

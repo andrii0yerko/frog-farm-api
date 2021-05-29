@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager
+from flask_sockets import Sockets
 
 import os
 from datetime import timedelta
@@ -10,6 +11,7 @@ from .gan import GANGenerator
 jwt = JWTManager()
 db = SQLAlchemy()
 model = GANGenerator()
+sockets = Sockets()
 
 
 def create_app():
@@ -22,7 +24,8 @@ def create_app():
 
     db.init_app(app)
     jwt.init_app(app)
-    
+    sockets.init_app(app)
+
     with app.app_context():
         from models import Image, User, Frog
         from controllers.event import on_frog_load
@@ -32,7 +35,9 @@ def create_app():
         from api import bp as api_bp
         app.register_blueprint(api_bp, url_prefix='/api/v1')
 
+        from websockets import ws
+        sockets.register_blueprint(ws, url_prefix=r'/api/v1')
+
         from .shell import make_shell_context
         app.shell_context_processor(make_shell_context)
-
         return app

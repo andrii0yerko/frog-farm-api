@@ -1,5 +1,6 @@
 from flask_restful import Resource, marshal_with, reqparse
 from flask import jsonify
+from flask import current_app as app
 
 from models.user import User
 from .json_fields import user_fields
@@ -35,5 +36,5 @@ class AuthEndpoint(Resource):
             return error_response(401, "Wrong password")
 
         access_token = create_access_token(identity=user)
-        print(access_token)
+        app.logger.info(f"{user} logged in")
         return jsonify(access_token=access_token)

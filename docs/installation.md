@@ -31,15 +31,23 @@ export JWT_SECRET_KEY="secret!"
 # if you want to use flask shell
 # or run the application with the flask command 
 export FLASK_APP="main.py"
+# log level for production server. One of critical, error, warning, info, debug
+export LOG_LEVEL="info"
 ```
 ```bash
 # on Windows
 set DATABASE_URL="dbms://username:password@host:port/database_name"
 set JWT_SECRET_KEY="secret!"
 set FLASK_APP="main.py"
+set LOG_LEVEL="info"
 ```
 
-5. Now you can run it with
+5. Now you can run it in development mode with
 ```bash
 python3 main.py
+```
+
+For production mode run
+```
+gunicorn -k flask_sockets.worker main:app --log-level=$LOG_LEVEL
 ```
