@@ -18,6 +18,7 @@ frog_fields = {
 
 user_list_fields = {
     'username': fields.String,
+    'id': fields.Integer,
     'url': fields.String(
         attribute=lambda x: url_for('api.userresource', id=x.id)
     ),
