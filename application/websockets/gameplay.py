@@ -13,7 +13,6 @@ class Client():
     def __init__(self, socket):
         self.socket = socket
         self.user = None
-        self.listening_to = None
 
     @property
     def closed(self):
@@ -53,7 +52,7 @@ class Gameplay(WSEndpoint):
     ALLOWED_ACTIONS = ["ping", "authorization", "get", "interact", "buy"]
     REQUIRED_PARAMS = {  # used for the simple args parsing now. What about migrating to Marshmallow?
         "authorization": ["username", "password"],
-        "interact": ["subaction", "id"]
+        "interact": ["subaction", "frog_id"]
     }
     clients = []
 
@@ -127,7 +126,7 @@ class Gameplay(WSEndpoint):
     def interact(self, client, message):
         if not client.is_authorized:
             return self.error_response(client, "You should log in first")
-        frog_id = message['id']
+        frog_id = message['frog_id']
         frog = Frog.query.get(frog_id)
         if not frog:
             return self.error_response(client, "There is no frog with such id")
@@ -148,19 +147,42 @@ class Gameplay(WSEndpoint):
 
     def get_resource(self, client, message):
         resource = message['resource']
-        if resource == "frogs":
-            if not client.listening_to:
-                return self.error_response(client, "You should navigate to user profile first")
+
+        if resource == "my_frogs":
+            if not client.is_authorized:
+                return self.error_response(client, "You should log in first")
             else:
-                frogs = [FrogSchema().dump(f) for f in client.listening_to.frogs]
-                return self.send_resource(client, "user", frogs)
+                frogs = [FrogSchema().dump(f) for f in client.user.frogs]
+                return self.send_resource(client, "frogs", frogs)
+
+        elif resource == "frogs":
+            if "user_id" not in message:
+                return self.self.error_response(client, "user_id is missing")
+            user_id = message['user_id']
+            user = User.query.get(user_id)
+            if not user:
+                return self.error_response(client, "There is no user with such id")
+            frogs = [FrogSchema().dump(f) for f in user.frogs]
+            return self.send_resource(client, "frogs", frogs)
+
         elif resource == "frog":
-            if "id" not in message:
-                frog_id = message['id']
+            if "frog_id" not in message:
+                return self.self.error_response(client, "frog_id is missing")
+            frog_id = message['frog_id']
             frog = Frog.query.get(frog_id)
+            if not frog:
+                return self.error_response(client, "There is no frog with such id")
             return self.send_resource(client, "frog", FrogSchema().dump(frog))
+
         elif resource == "user":
-            pass
+            if "user_id" not in message:
+                return self.self.error_response(client, "user_id is missing")
+            user_id = message['user_id']
+            user = User.query.get(user_id)
+            if not user:
+                return self.error_response(client, "There is no user with such id")
+            return self.send_resource(client, "user", UserSchema().dump(user))
+
         elif resource == "me":
             if not client.is_authorized:
                 return self.error_response(client, "You should log in first")
