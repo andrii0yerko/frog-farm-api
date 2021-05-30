@@ -16,8 +16,7 @@ class User(db.Model):
     total_water_spent = db.Column(db.BigInteger, nullable=False, default=0)
     total_money_collected = db.Column(db.BigInteger, nullable=False, default=0)
 
-    frogs = db.relationship('Frog', backref='owner', lazy=True)
-
+    frogs = db.relationship('Frog', backref='owner', lazy=True, order_by="Frog.id")
 
     def __init__(self, username, email, password):
         self.username = username

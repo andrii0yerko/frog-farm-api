@@ -14,10 +14,7 @@ class UserFrogsResource(Resource):
     @marshal_with(frog_fields)
     def get(self, id):
         user = User.query.get_or_404(id)
-        # frogs = [marshal(frog, frog_fields) for frog in user.frogs]
-        frogs = user.frogs
-        frogs.sort(key=lambda frog: frog.id)
-        return frogs
+        return user.frogs
 
     @jwt_required()
     def post(self, id):
