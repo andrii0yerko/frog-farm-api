@@ -9,6 +9,7 @@ def create_user(username, email, password):
     db.session.add(user)
     db.session.commit()
     add_frog(user)
+    change_money(user, FROG_PRICE)
     return user
 
 
