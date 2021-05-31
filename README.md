@@ -12,4 +12,5 @@ Image generation based on a GAN model created with PyTorch.
 
 ## Documentation
 - [Installation](./docs/installation.md)
-- [API documentation](./docs/api_docs.md)
+- [WebSocket API documentation](./docs/websocket_api_docs.md)
+- [HTTP API documentation](./docs/http_api_docs.md)
