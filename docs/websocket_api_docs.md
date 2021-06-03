@@ -155,6 +155,30 @@ Frog with requested id exists, and action was completed
 }
 ```
 
+### Error response
+Frog with such id does not exists
+```js
+{
+    "type": "error",
+    "message": "There is no frog with such id"
+}
+```
+User does not own this frog
+```js
+{
+    "type": "error",
+    "message": "Not your frog"
+}
+```
+
+The subaction was "upgrade" but the user does not have enough money
+```js
+{
+    "type": "error",
+    "message": "Not enough money"
+}
+```
+
 ## Buy a frog
 _Authorization required_
 ```js
@@ -299,3 +323,5 @@ Otherwise
 # Technical
 `PING` - message that will not be responded by the server, but can be useful to keep the connection alive
 if there are some limitations for the idling time (e.g. 55 seconds on Heroku)
+
+Server -> client ping message currently is not provided, feel free to add it on your own :)

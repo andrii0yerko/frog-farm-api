@@ -6,30 +6,18 @@
 	},
 	"item": [
 		{
-			"name": "frog",
+			"name": "Frog",
 			"item": [
 				{
 					"name": "Frog",
 					"request": {
 						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "admin@admin.admin",
-									"type": "string"
-								},
-								{
-									"key": "password",
-									"value": "123321",
-									"type": "string"
-								}
-							]
+							"type": "noauth"
 						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/api/v1/frogs/2",
+							"raw": "{{url}}/api/v1/frogs/1",
 							"host": [
 								"{{url}}"
 							],
@@ -37,7 +25,7 @@
 								"api",
 								"v1",
 								"frogs",
-								"2"
+								"1"
 							]
 						}
 					},
@@ -49,7 +37,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/api/v1/frogs/2",
+							"raw": "{{url}}/api/v1/frogs/1",
 							"host": [
 								"{{url}}"
 							],
@@ -57,7 +45,7 @@
 								"api",
 								"v1",
 								"frogs",
-								"2"
+								"1"
 							]
 						}
 					},
@@ -66,21 +54,6 @@
 				{
 					"name": "Wash the Frog",
 					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "password",
-									"value": "123321",
-									"type": "string"
-								},
-								{
-									"key": "username",
-									"value": "Admin",
-									"type": "string"
-								}
-							]
-						},
 						"method": "PUT",
 						"header": [],
 						"body": {
@@ -110,21 +83,6 @@
 				{
 					"name": "Feed the Frog",
 					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "password",
-									"value": "123321",
-									"type": "string"
-								},
-								{
-									"key": "username",
-									"value": "Admin",
-									"type": "string"
-								}
-							]
-						},
 						"method": "PUT",
 						"header": [],
 						"body": {
@@ -137,7 +95,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/api/v1/frogs/2",
+							"raw": "{{url}}/api/v1/frogs/1",
 							"host": [
 								"{{url}}"
 							],
@@ -145,7 +103,36 @@
 								"api",
 								"v1",
 								"frogs",
-								"2"
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Upgrade the Frog (-1000 money)",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"action\": \"upgrade\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/frogs/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"frogs",
+								"1"
 							]
 						}
 					},
@@ -154,21 +141,6 @@
 				{
 					"name": "Collect money from the frog",
 					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "password",
-									"value": "123321",
-									"type": "string"
-								},
-								{
-									"key": "username",
-									"value": "Admin",
-									"type": "string"
-								}
-							]
-						},
 						"method": "PUT",
 						"header": [],
 						"body": {
@@ -204,19 +176,7 @@
 					"name": "User",
 					"request": {
 						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "admin@admin.admin",
-									"type": "string"
-								},
-								{
-									"key": "password",
-									"value": "123321",
-									"type": "string"
-								}
-							]
+							"type": "noauth"
 						},
 						"method": "GET",
 						"header": [],
@@ -238,11 +198,14 @@
 				{
 					"name": "Create new user",
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\n}",
+							"raw": "{\n    \"username\": \"not admin\",\n    \"email\": \"12123@admin.admin\",\n    \"password\": \"asdfg123123\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -262,6 +225,34 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Search users",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/v1/users?username=admin",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "admin"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -271,6 +262,9 @@
 				{
 					"name": "User Frogs",
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -292,21 +286,6 @@
 				{
 					"name": "Buy a frog",
 					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "password",
-									"value": "123321",
-									"type": "string"
-								},
-								{
-									"key": "username",
-									"value": "Admin",
-									"type": "string"
-								}
-							]
-						},
 						"method": "POST",
 						"header": [],
 						"url": {
@@ -328,45 +307,119 @@
 			]
 		},
 		{
-			"name": "Get image",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{url}}/api/v1/images/6",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"api",
-						"v1",
-						"images",
-						"6"
-					]
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Get token",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"Admin\",\n    \"password\": \"qwerty123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/auth",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Who am I?",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:5000/api/v1/auth",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"v1",
+								"auth"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "Random Img",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{url}}/api/v1/random_image",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"api",
-						"v1",
-						"random_image"
-					]
+			"name": "Image",
+			"item": [
+				{
+					"name": "Get image",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/v1/images/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"images",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Random Img",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/v1/random_image",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"random_image"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		}
 	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYyMjAzODEwNCwianRpIjoiOTE5NjRhNTAtY2FkMi00NWJjLThmMTYtMzM5ZTBkNTg3YTk5IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MSwibmJmIjoxNjIyMDM4MTA0LCJleHAiOjE2MjIwNDE3MDR9.L7b-ghyYR29mSCr_tcInPyATHyPz09C4XNytnLsu78Y",
+				"type": "string"
+			}
+		]
+	},
 	"event": [
 		{
 			"listen": "prerequest",
@@ -390,7 +443,7 @@
 	"variable": [
 		{
 			"key": "url",
-			"value": "http://127.0.0.1:5000"
+			"value": "http://0.0.0.0:5000"
 		}
 	]
 }

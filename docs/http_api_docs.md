@@ -1,3 +1,5 @@
+# HTTP
+This file contains documentation to the HTTP RESTful API, Postman Collection of the same requests can be found in the [parent folder](/docs).
 # Authentication
 [JWT authentication](https://en.wikipedia.org/wiki/JSON_Web_Token) is used, so auth-required requests should include header `Authorization: Bearer {{token}}`.
 
@@ -7,7 +9,7 @@
 - **Method**: `POST`
 
 - **Body**:
-```
+```js
 {
     "username": "username or password",
     "password": "password"
